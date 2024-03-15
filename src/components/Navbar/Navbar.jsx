@@ -6,7 +6,7 @@ import { IoIosSearch } from "react-icons/io";
 
 const Navbar = () => {
   return (
-    <div className="py-4">
+    <div className="py-4 pl-1">
       <div className="flex justify-between px-5">
         <div className="flex items-center">
           <GiHamburgerMenu size="24px" />
