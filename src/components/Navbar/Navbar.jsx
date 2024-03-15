@@ -1,19 +1,19 @@
 import Avatar from "react-avatar";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoMdNotificationsOutline } from "react-icons/io";
+import { IoIosSearch, IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineVideoCall } from "react-icons/md";
-import { IoIosSearch } from "react-icons/io";
-import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { toggleSidebar } from "../../redux/features/appSlice/appSlice";
 
 const Navbar = () => {
-  const [open, setOpen] = useState(true);
+  const dispatch = useDispatch();
 
   const toggleHandler = () => {
-    setOpen(!open);
+    dispatch(toggleSidebar());
   };
 
   return (
-    <div className="py-4 pl-1">
+    <div className="py-4 ml-2">
       <div className="flex justify-between px-5">
         <div className="flex items-center">
           <GiHamburgerMenu
@@ -22,7 +22,7 @@ const Navbar = () => {
             size="24px"
           />
           <img
-            className="w-[120px] px-4 cursor-pointer"
+            className="w-[140px] px-4 cursor-pointer"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/1280px-YouTube_Logo_2017.svg.png"
             alt=""
           />

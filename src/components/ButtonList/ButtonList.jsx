@@ -21,7 +21,7 @@ const buttonList = [
 
 const ButtonList = () => {
   return (
-    <div className="flex w-full overflow-x-scroll  my-1">
+    <div className="flex w-full overflow-x-scroll  my-3">
       {buttonList.map((buttonName, index) => {
         return (
           <div key={index}>
