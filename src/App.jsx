@@ -4,11 +4,11 @@ import Sidebar from "./components/Sidebar/Sidebar";
 
 function App() {
   return (
-    <h1 className="text-center">
+    <h1 className="text-center max-w-screen-2xl mx-auto">
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <Feed/>
+        <Feed />
       </div>
     </h1>
   );

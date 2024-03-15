@@ -3,15 +3,26 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import { IoMdNotificationsOutline } from "react-icons/io";
 import { MdOutlineVideoCall } from "react-icons/md";
 import { IoIosSearch } from "react-icons/io";
+import { useState } from "react";
 
 const Navbar = () => {
+  const [open, setOpen] = useState(true);
+
+  const toggleHandler = () => {
+    setOpen(!open);
+  };
+
   return (
     <div className="py-4 pl-1">
       <div className="flex justify-between px-5">
         <div className="flex items-center">
-          <GiHamburgerMenu size="24px" />
+          <GiHamburgerMenu
+            onClick={toggleHandler}
+            className="cursor-pointer"
+            size="24px"
+          />
           <img
-            className="w-[120px] px-4"
+            className="w-[120px] px-4 cursor-pointer"
             src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/1280px-YouTube_Logo_2017.svg.png"
             alt=""
           />

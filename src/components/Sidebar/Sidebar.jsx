@@ -102,6 +102,7 @@ const sidebarItem = [
 ];
 
 const Sidebar = () => {
+  let open = false;
   return (
     <div
       className={`relative left-0 ${
