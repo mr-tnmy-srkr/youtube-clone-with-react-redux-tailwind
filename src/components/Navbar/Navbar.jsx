@@ -13,7 +13,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="py-4 ml-2">
+    <div className=" py-4 ml-2">
       <div className="flex justify-between px-5">
         <div className="flex items-center">
           <GiHamburgerMenu
