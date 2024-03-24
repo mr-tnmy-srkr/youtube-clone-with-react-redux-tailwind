@@ -4,12 +4,13 @@ import Avatar from "react-avatar";
 import { AiOutlineDislike, AiOutlineLike } from "react-icons/ai";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { GoDownload } from "react-icons/go";
-// import { LuSendHorizonal } from "react-icons/lu";
+import { LuSendHorizonal } from "react-icons/lu";
 import { PiShareFatLight } from "react-icons/pi";
 import { useDispatch } from "react-redux";
 import { useSearchParams } from "react-router-dom";
-// import { setMessage } from "../utils/chatSlice";
-// import LiveChat from "./LiveChat";
+import { setMessage } from "../../redux/features/chatSlice/chatSlice";
+import LiveChat from "../LiveChat/LiveChat";
+
 
 const Watch = () => {
   const [input, setInput] = useState("");
@@ -31,10 +32,10 @@ const Watch = () => {
     }
   };
 
-  /*  const sendMessage = () => {
-    dispatch(setMessage({ name: "Patel", message: input }));
+   const sendMessage = () => {
+    dispatch(setMessage({ name: "Tanmoy", message: input }));
     setInput("");
-  }; */
+  };
 
   useEffect(() => {
     getSingleVideo();
@@ -93,7 +94,7 @@ const Watch = () => {
             <BsThreeDotsVertical />
           </div>
           <div className="overflow-y-auto h-[28rem] flex flex-col-reverse">
-            {/* <LiveChat /> */}
+            <LiveChat />
           </div>
 
           <div className="flex items-center justify-between border-t p-2">
@@ -113,7 +114,7 @@ const Watch = () => {
                 placeholder="Send message..."
               />
               <div className="bg-gray-200 cursor-pointer p-2 rounded-full">
-                {/* <LuSendHorizonal onClick={sendMessage} /> */}
+                <LuSendHorizonal onClick={sendMessage} />
               </div>
             </div>
           </div>
