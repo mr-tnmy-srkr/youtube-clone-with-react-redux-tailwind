@@ -11,7 +11,6 @@ import { useSearchParams } from "react-router-dom";
 import { setMessage } from "../../redux/features/chatSlice/chatSlice";
 import LiveChat from "../LiveChat/LiveChat";
 
-
 const Watch = () => {
   const [input, setInput] = useState("");
   const [singleVideo, setSingleVideo] = useState(null);
@@ -32,7 +31,7 @@ const Watch = () => {
     }
   };
 
-   const sendMessage = () => {
+  const sendMessage = () => {
     dispatch(setMessage({ name: "Tanmoy", message: input }));
     setInput("");
   };

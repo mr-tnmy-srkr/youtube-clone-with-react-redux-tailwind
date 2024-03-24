@@ -4,7 +4,6 @@ import { generateRandomMessage, generateRandomName } from "../../utils/helper";
 import ChatMessage from "../ChatMessage/ChatMessage";
 import { setMessage } from "../../redux/features/chatSlice/chatSlice";
 
-
 const LiveChat = () => {
   const message = useSelector((store) => store.chat.message);
   const dispatch = useDispatch();

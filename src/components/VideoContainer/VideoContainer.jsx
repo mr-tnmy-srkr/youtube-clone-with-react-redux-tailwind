@@ -1,12 +1,13 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import VideoCard from "../../VideoCard/VideoCard";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { CiLight } from "react-icons/ci";
+import VideoCard from "../../VideoCard/VideoCard";
+import { setHomeVideo } from "../../redux/features/appSlice/appSlice";
 
 const VideoContainer = () => {
-  const [video, setVideo] = useState([]);
-
+  const { video, category } = useSelector((store) => store.app);
+  const dispatch = useDispatch();
   const fetchingYoutubeVideo = async () => {
     try {
       const res = await axios.get(
@@ -14,15 +15,32 @@ const VideoContainer = () => {
           import.meta.env.VITE_API_KEY
         }`
       );
-      setVideo(res?.data?.items);
+      dispatch(setHomeVideo(res?.data?.items));
     } catch (error) {
       console.error(error);
     }
   };
 
+  const fetchVideoByCategory = async (category) => {
+    try {
+      const res = await axios.get(
+        `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=50&q=${category}&type=video&key=${
+          import.meta.env.VITE_API_KEY
+        }`
+      );
+      dispatch(setHomeVideo(res?.data?.items));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   useEffect(() => {
-    fetchingYoutubeVideo();
-  }, []);
+    if (category === "All") {
+      fetchingYoutubeVideo();
+    } else {
+      fetchVideoByCategory(category);
+    }
+  }, [category]);
   return (
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-3 ">
       {video?.map((item) => {
