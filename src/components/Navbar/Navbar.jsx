@@ -1,54 +1,117 @@
+import axios from "axios";
+import { useEffect, useState } from "react";
 import Avatar from "react-avatar";
+import { CiSearch, CiVideoOn } from "react-icons/ci";
 import { GiHamburgerMenu } from "react-icons/gi";
-import { IoIosSearch, IoMdNotificationsOutline } from "react-icons/io";
-import { MdOutlineVideoCall } from "react-icons/md";
-import { useDispatch } from "react-redux";
-import { toggleSidebar } from "../../redux/features/appSlice/appSlice";
+import { IoIosNotificationsOutline } from "react-icons/io";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  setCategory,
+  setSearchSuggestion,
+  toggleSidebar,
+} from "../../redux/features/appSlice/appSlice";
 
 const Navbar = () => {
+  const [input, setInput] = useState("");
+  const [suggestion, setSuggestion] = useState(false);
   const dispatch = useDispatch();
+  const { searchSuggestion } = useSelector((store) => store.app);
+
+  const searchVideo = () => {
+    dispatch(setCategory(input));
+    setInput("");
+  };
 
   const toggleHandler = () => {
     dispatch(toggleSidebar());
   };
 
+  const showSuggestion = async () => {
+    try {
+      const res = await axios.get(
+        import.meta.env.VITE_SEARCH_SUGGESTIONS_API + input
+      );
+      dispatch(setSearchSuggestion(res?.data[1]));
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const openSuggestion = () => {
+    setSuggestion(true);
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      showSuggestion();
+    }, 200);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [input]);
+
   return (
-    <div className=" py-4 ml-2">
-      <div className="flex justify-between px-5">
-        <div className="flex items-center">
+    <div className="flex fixed top-0 justify-center items-center w-[100%] z-10 bg-white">
+      <div className="flex w-[96%] py-3 justify-between items-center">
+        <div className="flex items-center ">
           <GiHamburgerMenu
             onClick={toggleHandler}
-            className="cursor-pointer"
             size="24px"
+            className="cursor-pointer"
           />
           <img
-            className="w-[140px] px-4 cursor-pointer"
-            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/1280px-YouTube_Logo_2017.svg.png"
-            alt=""
+            className="px-4"
+            width={"115px"}
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/b/b8/YouTube_Logo_2017.svg/768px-YouTube_Logo_2017.svg.png"
+            alt="yt_logo"
           />
         </div>
-        <div className="w-[40%] flex items-center">
-          <div className="w-full px-4 py-3 border rounded-l-full border-gray-400">
+        <div className="flex w-[40%] items-center">
+          <div className="flex w-[100%] ">
             <input
+              value={input}
+              onFocus={openSuggestion}
+              onChange={(e) => setInput(e.target.value)}
               type="text"
-              name=""
-              id=""
-              placeholder="hello"
-              className="w-full  outline-none "
+              placeholder="Search"
+              className="w-full py-2 px-4 border border-gray-400 rounded-l-full outline-none"
             />
+            <button
+              onClick={searchVideo}
+              className="py-2 border border-gray-400 rounded-r-full px-4"
+            >
+              <CiSearch size="24px" />
+            </button>
           </div>
-          <button className="px-4 py-3 border border-gray-400 rounded-r-full">
-            <IoIosSearch size="24px" />
-          </button>
+          {suggestion && searchSuggestion.length !== 0 && (
+            <div className="absolute top-3 z-50 w-[30%] py-5 bg-white shadow-lg mt-12 rounded-lg border border-gray-200">
+              <ul>
+                {searchSuggestion.map((text, idx) => {
+                  return (
+                    <div
+                      key={idx}
+                      className="flex items-center px-4 hover:bg-gray-100"
+                    >
+                      <CiSearch size="24px" />
+                      <li className="px-2 py-1 cursor-pointer text-md font-medium">
+                        {text}
+                      </li>
+                    </div>
+                  );
+                })}
+              </ul>
+            </div>
+          )}
         </div>
+
         <div className="flex w-[10%] justify-between items-center">
-          <MdOutlineVideoCall size="30px" className="cursor-pointer" />
-          <IoMdNotificationsOutline size="30px" className="cursor-pointer" />
+          <IoIosNotificationsOutline size={"24px"} className="cursor-pointer" />
+          <CiVideoOn size={"24px"} className="cursor-pointer" />
           <Avatar
-            src="https://i.ibb.co/JkKB1dH/boy.png"
-            size="30"
+            src="https://play-lh.googleusercontent.com/C9CAt9tZr8SSi4zKCxhQc9v4I6AOTqRmnLchsu1wVDQL0gsQ3fmbCVgQmOVM1zPru8UH=w240-h480-rw"
+            size={35}
             round={true}
-            className="cursor-pointer"
           />
         </div>
       </div>

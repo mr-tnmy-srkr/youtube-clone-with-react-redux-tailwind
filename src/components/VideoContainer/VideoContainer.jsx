@@ -46,10 +46,10 @@ const VideoContainer = () => {
       {video?.map((item) => {
         return (
           <Link
-            key={item.id}
             to={`/watch?v=${
               typeof item.id === "object" ? item.id.videoId : item.id
             }`}
+            key={typeof item.id === "object" ? item.id.videoId : video.id}
           >
             <VideoCard item={item} />
           </Link>
