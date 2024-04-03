@@ -13,6 +13,7 @@ import {
 
 const Navbar = () => {
   const [input, setInput] = useState("");
+  console.log(import.meta.env.VITE_SEARCH_SUGGESTIONS_API + input);
   const [suggestion, setSuggestion] = useState(false);
   const dispatch = useDispatch();
   const { searchSuggestion } = useSelector((store) => store.app);
@@ -29,7 +30,12 @@ const Navbar = () => {
   const showSuggestion = async () => {
     try {
       const res = await axios.get(
-        import.meta.env.VITE_SEARCH_SUGGESTIONS_API + input
+      import.meta.env.VITE_SEARCH_SUGGESTIONS_API + input,
+      {headers: {
+        "x-apikey": "AIzaSyDxzJyLn9nRurdg-oBSHrk2y2LmxoEFMog",
+      },
+      responseType: "json",
+    }
       );
       dispatch(setSearchSuggestion(res?.data[1]));
     } catch (error) {
